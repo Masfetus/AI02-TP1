@@ -22,7 +22,6 @@
         (print "Erreur : L n'est pas une liste")
     )
 )
-(reverse )
 (defun double(L)
     (if (listp L)
         (if (> (length L) 0)
@@ -178,56 +177,60 @@
 "Question 4"
 
 (defun nb-prevoyants (cimetiere)
-    (setq cim (cadr cimetiere))
-    (setq nb 0)
-    (loop for i from 0 to (- (list-length cim) 1)
-        do 
-            (if (prevoyant? (nth i cim))
-                (setq nb (+ nb 1))
-                (setq nb nb)
-            )
+    (let ((cim (cadr cimetiere))
+          (nb 0))
+        (setq nb 0)
+        (loop for i from 0 to (- (list-length cim) 1)
+            do 
+                (if (prevoyant? (nth i cim))
+                    (setq nb (+ nb 1))
+                    (setq nb nb)
+                )
+        )
+        nb
     )
-    nb
 )
 
 "Question 5"
 
 (defun annuaire (cimetiere rangee)
-    (setq cim (cadr cimetiere))
-    (setq noms '())
-    (loop for i from 0 to (- (list-length cim) 1)
-        do 
-            (if (equal rangee (rangee (nth i cim)))
-                (setq noms 
-                    (push 
-                        (nom (nth i cim )) noms)
-                        )
-            )
-            (setq noms noms)
+    (let ((cim (cadr cimetiere))
+          (noms '()))
+        (loop for i from 0 to (- (list-length cim) 1)
+            do 
+                (if (equal rangee (rangee (nth i cim)))
+                    (setq noms 
+                        (push 
+                            (nom (nth i cim )) noms)
+                            )
+                )
+                (setq noms noms)
+        )
+        noms
     )
-    noms
 )
 
 "Question 6"
 
 (defun doyen-benjamin (cimetiere )
-    (setq cim (cadr cimetiere))
-    (setq doyen (car cim))
-    (setq benjamin (car cim))
-    (loop for i from 1 to (- (list-length cim) 1)
-        do 
-            (if (> (an-inhum doyen) (an-inhum (nth i cim)))
-                (setq doyen 
-                    (nth i cim)
+    (let* ((cim (cadr cimetiere))
+          (doyen (car cim))
+          (benjamin (car cim)))
+        (loop for i from 1 to (- (list-length cim) 1)
+            do 
+                (if (> (an-inhum doyen) (an-inhum (nth i cim)))
+                    (setq doyen 
+                        (nth i cim)
+                    )
+                    (setq doyen doyen)
                 )
-                (setq doyen doyen)
-            )
-            (if (< (an-inhum benjamin) (an-inhum (nth i cim)))
-                (setq benjamin (nth i cim))
-                (setq doyen doyen)
-            )
+                (if (< (an-inhum benjamin) (an-inhum (nth i cim)))
+                    (setq benjamin (nth i cim))
+                    (setq doyen doyen)
+                )
+        )
+        (list doyen benjamin)
     )
-    (list doyen benjamin)
 )
 
 
