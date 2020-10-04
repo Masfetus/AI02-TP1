@@ -5,19 +5,17 @@
 )
 
 (defun reverseB(L)
-    (let ((listDoubled '()))
+    (let ((listReversed '()))
     (dolist (elem L)
-        (push elem listDoubled)
+        (push elem listReversed)
     )
-    listDoubled
+    listReversed
 ))
 (defun reverseC(L)
-    (let ((listDoubled '()))
-    (dolist (elem L)
-        (push elem listDoubled)
+    (if (> (length L) 0)
+        (append (reverseC (cdr L)) (list (car L))) 
     )
-    listDoubled
-))
+)
 
 (defun double(L)
     (let ((listDoubled '()))
@@ -30,7 +28,10 @@
     listDoubled
 ))
 (defun nombres3 (L)
-    (if (and (and (numberp (car L)) (numberp (cadr L))) (numberp (caddr L))) "BRAVO" "PERDU")
+    (if (and (and (numberp (car L)) (numberp (cadr L))) (numberp (caddr L))) 
+        "BRAVO" 
+        "PERDU"
+    )
 )
 (defun grouper(L1 L2)
     (let ((groupedList '()))
@@ -40,9 +41,8 @@
     groupedList
 ))
 (defun monReverse(L)
-    (let ((listDoubled '()))
-    (dolist (elem L)
-        (push elem listDoubled)
+    (if (> (length L) 0)
+        (append (reverseC (cdr L)) (list (car L))) 
     )
 )
 (defun palindrome(L)
@@ -58,10 +58,14 @@
     (mapcar (lambda (assoc) (car assoc)) a-list)
 )
 (defun creation(listeCles listeVal)
-    (funcall 'grouper listeCles listeVal)
+    (grouper listeCles listeVal)
 )
 (defun my-assoc (cle a-list)
-    (mapcar (lambda (x) (if (not (equal (member cle x) nil)) (member cle x))) a-list)
+    (mapcar (lambda (x) 
+        (if (not (equal (member cle x) nil)) 
+            (member cle x)
+        )
+    ) a-list)
 )
 
 
@@ -73,12 +77,14 @@
     (if (and (listp tombe) (equal (length tombe) 5) (listp (caddr tombe)))
         t 
         nil
-    ))
+    )
+)
 (defun nom (tombe)
     (if (bonformat tombe)
         (car tombe)
         "Erreur format données tombe"
-))
+    )
+)
 
 (defun an-inhum (tombe)
     (if (bonformat tombe)
@@ -90,43 +96,45 @@
     (if (bonformat tombe)
         (cadr (caddr tombe))
         "Erreur format données tombe"
-))
+    )
+)
 
 (defun rangee (tombe)
     (if (bonformat tombe)
         (car (caddr tombe))
-        "Erreur format données tombe")
+        "Erreur format données tombe"
+    )
 )
 
 (defun debut-loc (tombe)
     (if (bonformat tombe)
         (nth 3 tombe)
         "Erreur format données tombe"
-        )
     )
+)
 (defun duree-loc (tombe)
     (if (bonformat tombe)
-        (last tombe)
+        (car (last tombe))
         "Erreur format données tombe"
-        )
     )
+)
 (defun emplacement (tombe)
     (if (bonformat tombe)
         (nth 2 tombe)
         "Erreur format données tombe"
-        )
+    )
 )
 
 "Question 2 "
 
-(defun qui-est-la (cimetiere emplacement)
+(defun qui-est-la (emplacement cimetiere)
     (if (bonformat (car cimetiere))
         (if (equal emplacement (emplacement (car cimetiere)))
             (nom (car cimetiere))
-            (qui-est-la (cdr cimetiere) emplacement) 
+            (qui-est-la emplacement (cdr cimetiere)) 
             )
         (if (listp (nth 1 cimetiere))
-            (qui-est-la (nth 1 cimetiere) emplacement)
+            (qui-est-la emplacement (nth 1 cimetiere))
             "Emplacement non attribué"
         )
         
